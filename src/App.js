@@ -1,14 +1,14 @@
 import React from 'react'
 import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
-import Increment from './react-hook/TestHook1';
-import TestHook from './react-hook/TestHook2';
+import TestHook1 from './react-hook/TestHook1';
+import TestHook2 from './react-hook/TestHook2';
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path='increment' element={<Increment/>}/>
-        <Route path='/testhook' element={<TestHook/>}/>
+        <Route path='/testhook1' element={<TestHook1/>}/>
+        <Route path='/' element={<TestHook2/>}/>
       </Routes>
     </Router>
   )

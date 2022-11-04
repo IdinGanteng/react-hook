@@ -1,22 +1,59 @@
 
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Form, Input,Table } from 'antd';
 import React from 'react';
 import { useState,useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import {Pengguna} from './TestHook1'
+
+
+const GetDataFromLS=()=>{
+  const data = localStorage.getItem('user');
+  if(data){
+    return JSON.parse(data);
+  }else{
+    return[]
+  }
+}
 
 const TestHook2 = () => {
-  const {reset}=useForm();
-  const onFinish = (values) => {
-    localStorage.setItem('Success:', JSON.stringify(values));
-  };
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
-  useEffect(() => {
-    // reset form with user data
-    reset();
-}, []);
+  //input
+  const [user,setUser]=useState(GetDataFromLS())
+ const[userName,setUserName]=useState('');
+ const[email,setEmail]=useState('');
+
+ const handleSubmit=(e)=>{
+  e.preventDefault();
+  let userd={
+    userName,email
+  }
+  setUser([...user,userd]);
+  setUserName('');
+  setEmail('');
+ }
+ 
+ useEffect(()=>{
+  localStorage.setItem('user',JSON.stringify(user));
+ },[user])
+
+ //table output
+ const dataSource = [
+
+];
+
+const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+   
+  },
+  {
+    title: 'Email',
+    dataIndex: 'Email',
+   
+  },
+
+];
   return (
+    <div>
     <Form
       name="basic"
       labelCol={{
@@ -25,11 +62,7 @@ const TestHook2 = () => {
       wrapperCol={{
         span: 10,
       }}
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
+
       autoComplete="off"
     >
       <Form.Item
@@ -37,25 +70,25 @@ const TestHook2 = () => {
         name="username"
         rules={[
           {
-            required: true,
+            
             message: 'Please input your username!',
           },
         ]}
       >
-        <Input />
+        <Input onChange={(e)=>setUserName(e.target.value)} value={userName}/>
       </Form.Item>
 
       <Form.Item
-        label="Password"
-        name="password"
+        label="email"
+        name="email"
         rules={[
           {
-            required: true,
-            message: 'Please input your password!',
+            
+            message: 'Please input your email!',
           },
         ]}
       >
-        <Input.Password />
+        <Input onChange={(e)=>setEmail(e.target.value)} value={email}/>
       </Form.Item>
 
       <Form.Item
@@ -66,7 +99,6 @@ const TestHook2 = () => {
           span: 16,
         }}
       >
-        <Checkbox>Remember me</Checkbox>
       </Form.Item>
 
       <Form.Item
@@ -75,11 +107,19 @@ const TestHook2 = () => {
           span: 16,
         }}
       >
-        <Button type="primary" htmlType="submit" onClick={() => reset()} >
+        <Button type="primary"onClick={handleSubmit} >
           Submit
+        </Button>
+        <Button  htmlType='reset' >
+          Reset
         </Button>
       </Form.Item>
     </Form>
+    <div>
+    <Table />;
+    </div>
+    </div>
+    
   );
 };
 export default TestHook2;

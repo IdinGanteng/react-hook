@@ -2,7 +2,7 @@
 import { Button, Form, Input,Table } from 'antd';
 import React from 'react';
 import { useState,useEffect } from 'react';
-import {Pengguna} from './TestHook1'
+import Pengguna from './TestHook1'
 
 
 const GetDataFromLS=()=>{
@@ -32,26 +32,17 @@ const TestHook2 = () => {
  
  useEffect(()=>{
   localStorage.setItem('user',JSON.stringify(user));
- },[user])
+ },[user]);
+//output table
 
- //table output
- const dataSource = [
-
-];
-
-const columns = [
+const columns=[
   {
-    title: 'Name',
-    dataIndex: 'name',
-   
+    title:'name'
   },
   {
-    title: 'Email',
-    dataIndex: 'Email',
-   
-  },
-
-];
+    title:'email'
+  }
+]
   return (
     <div>
     <Form
@@ -116,7 +107,13 @@ const columns = [
       </Form.Item>
     </Form>
     <div>
-    <Table />;
+    <Table>
+       <div>
+      {user.length>0&&<>
+        <Pengguna user={user}/>
+        </>}
+       </div>
+    </Table>
     </div>
     </div>
     
